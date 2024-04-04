@@ -1,0 +1,150 @@
+file:
+  comment: "#"
+  display_group: misc
+  format: tsv
+  header: true
+  name: files.tsv
+  source_date: "2022-10-15"
+identifiers:
+  assembly_id:
+    constraint:
+      len: 32
+    header: accession
+    type: keyword
+attributes:
+  files:
+    display_level: 1
+    file_paths:
+      busco:
+        color: "#bb2200"
+        full_table:
+          name: full_table.tsv
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/full_table.tsv
+              title: Download full_table.tsv file from molluscdb.cog.sanger.ac.uk
+        short_summary:
+          name: short_summary.txt
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/short_summary.txt
+              title: Download short_summary.txt file from molluscdb.cog.sanger.ac.uk
+        hmmer:
+          name: hmmer_output.tar.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/hmmer_output.tar.gz
+              title: Download hmmer_output.tar.gz file from molluscdb.cog.sanger.ac.uk
+        missing:
+          name: missing_busco_list.tsv
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/missing_busco_list.tsv
+              title: Download missing_busco_list.tsv file from molluscdb.cog.sanger.ac.uk
+        json_summary:
+          name: short_summary.json
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/short_summary.json
+              title: Download short_summary.json file from molluscdb.cog.sanger.ac.uk
+        single_copy:
+          name: busco_sequences/single_copy_busco_sequences.tar.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/busco_sequences/single_copy_busco_sequences.tar.gz
+              title: Download single_copy_busco_sequences.tar.gz file from molluscdb.cog.sanger.ac.uk
+        multi_copy:
+          name: busco_sequences/multi_copy_busco_sequences.tar.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/busco_sequences/multi_copy_busco_sequences.tar.gz
+              title: Download multi_copy_busco_sequences.tar.gz file from molluscdb.cog.sanger.ac.uk
+        fragmented:
+          name: busco_sequences/fragmented_busco_sequences.tar.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/{run}/busco_sequences/fragmented_busco_sequences.tar.gz
+              title: Download fragmented_busco_sequences.tar.gz file from molluscdb.cog.sanger.ac.uk
+
+      blobtoolkit:
+        color: "#9c528b"
+        all: true
+        blob:
+          name: images/blob.png
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/blobtoolkit/images/blob.png
+              title: Download blob plot from molluscdb.cog.sanger.ac.uk
+            - icon: view
+              pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/blob
+              title: View interactive blob plot at blobtoolkit.genomehubs.org
+        cumulative:
+          name: images/cumulative.png
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/blobtoolkit/images/cumulative.png
+              title: Download cumulative plot from molluscdb.cog.sanger.ac.uk
+            - icon: view
+              pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/cumulative
+              title: View interactive cumulative plot at blobtoolkit.genomehubs.org
+        snail:
+          name: images/snail.png
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/blobtoolkit/images/snail.png
+              title: Download snail plot from molluscdb.cog.sanger.ac.uk
+            - icon: view
+              pattern: https://snail.genomehubs.org/view/{run}/snail
+              title: View interactive snail plot at snail.genomehubs.org
+        blobdir:
+          name: blobdir.tar
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/blobtoolkit/blobdir.tar
+              title: Download blobdir from molluscdb.cog.sanger.ac.uk
+        config:
+          name: config.yaml
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/blobtoolkit/config.yaml
+              title: Download config.yaml file from molluscdb.cog.sanger.ac.uk
+        blastn:
+          name: blastn.nt.out.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/blobtoolkit/blastn.nt.out.gz
+              title: Download blastn.nt.out.gz file from molluscdb.cog.sanger.ac.uk
+        chunk_stats:
+          name: chunk_stats.tsv.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/{assembly_id}/blobtoolkit/chunk_stats.tsv.gz
+              title: Download chunk_stats.tsv.gz file from molluscdb.cog.sanger.ac.uk
+    header: files
+    separator: ","
+    type: keyword
+  files.busco.run:
+    header: files.busco.run
+    separator: ","
+  files.busco.eukaryota_odb10:
+    header: files.busco.eukaryota_odb10
+    separator: ","
+  files.busco.metazoa_odb10:
+    header: files.busco.metazoa_odb10
+    separator: ";"
+  files.busco.mollusca_odb10:
+    header: files.busco.mollusca_odb10
+    separator: ","
+  files.source.date:
+    header: files.source.date
+  files.source.name:
+    header: files.source.name
+  files.blobtoolkit.run:
+    header: files.blobtoolkit.run
+    separator: ","
+  files.blobtoolkit.all:
+    header: files.blobtoolkit.all
+    separator: ","
+taxonomy:
+  taxon_id:
+    header: taxon_id
