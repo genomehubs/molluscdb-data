@@ -2,6 +2,8 @@
 
 import argparse
 import contextlib
+import gzip
+import json
 import os
 from collections import defaultdict
 
@@ -163,6 +165,21 @@ def get_file_paths(meta):
     return meta.get("file_paths", {})
 
 
+def extract_id(s3, bucket, key):
+    obj = s3.get_object(Bucket=bucket, Key=key)
+    with gzip.GzipFile(fileobj=obj["Body"]) as gzipfile:
+        data = json.load(gzipfile)
+    return data["id"]
+
+
+def get_run_value(analysis, s3, bucket, prefix):
+    if analysis == "blobtoolkit":
+        key = f"{prefix}blobdir/meta.json.gz"
+        return extract_id(s3, bucket, key)
+    else:
+        return None
+
+
 def get_entries(s3, bucket, latest_dir, subdirs, file_paths, attribute):
     entries = defaultdict(list)
     for subdir in subdirs:
@@ -189,13 +206,25 @@ def get_entries(s3, bucket, latest_dir, subdirs, file_paths, attribute):
                     ):
                         continue
                     entries[f"{attribute}.{subdir}.{run}"].append(key)
+                    if run == "all":
+                        if not entries[f"{attribute}.{subdir}.run"]:
+                            entries[f"{attribute}.{subdir}.run"].append(
+                                get_run_value(
+                                    subdir, s3, bucket, f"{latest_dir}{subdir}/"
+                                )
+                            )
+                    elif run not in entries[f"{attribute}.{subdir}.run"]:
+                        entries[f"{attribute}.{subdir}.run"].append(run)
     return entries
 
 
 def print_entries(entries, meta):
     print(
         {
-            meta["headers"][key]: meta["separators"][key].join(entry)
+            meta["headers"]
+            .get(key, key): meta["separators"]
+            .get(key, ",")
+            .join([e for e in entry if e is not None])
             for key, entry in entries.items()
         }
     )
