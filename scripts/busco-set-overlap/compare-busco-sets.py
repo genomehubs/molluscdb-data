@@ -64,7 +64,7 @@ def generate_image(overlaps):
     viridis = cm.get_cmap("viridis")
 
     # Sort overlaps by overlap length
-    overlaps.sort(key=lambda x: x[2] + x[3], reverse=True)
+    overlaps.sort(key=lambda x: x[2], reverse=True)
 
     max_non_overlap = max(
         max(abs(non_overlap1), abs(non_overlap2))
