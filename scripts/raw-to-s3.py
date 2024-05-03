@@ -7,6 +7,7 @@ This script uploads files to an S3 bucket using the AWS SDK for Python (Boto3).
 import argparse
 import gzip
 import os
+import pathlib
 import re
 import sys
 import tarfile
@@ -32,16 +33,17 @@ def substitute(string, variables):
 
 
 def create_temp_file(filepath, s3path):
+    filename = pathlib.Path(filepath).name
     if s3path.endswith(".tar.gz") and not filepath.endswith(".tar.gz"):
-        temp_filepath = f"{filepath}.tar.gz"
+        temp_filepath = f"{filename}.tar.gz"
         with tarfile.open(temp_filepath, "w:gz") as tar:
             tar.add(filepath, arcname=os.path.basename(filepath))
     elif s3path.endswith(".tar") and not filepath.endswith(".tar"):
-        temp_filepath = f"{filepath}.tar"
+        temp_filepath = f"{filename}.tar"
         with tarfile.open(temp_filepath, "w") as tar:
             tar.add(filepath, arcname=os.path.basename(filepath))
     elif s3path.endswith(".gz") and not filepath.endswith(".gz"):
-        temp_filepath = f"{filepath}.gz"
+        temp_filepath = f"{filename}.gz"
         with open(filepath, "rb") as f_in:
             with gzip.open(temp_filepath, "wb") as f_out:
                 f_out.writelines(f_in)
