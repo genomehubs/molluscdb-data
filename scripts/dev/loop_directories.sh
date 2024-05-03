@@ -2,7 +2,15 @@
 
 source .env
 
-root=$1
+jsonl=$1
+
+# Check if $jsonl is a valid file
+if [ ! -f "$jsonl" ]; then
+    echo "Error: $jsonl is not a file"
+    exit 1
+fi
+
+root=$2
 
 # Check if $root is a valid directory
 if [ ! -d "$root" ]; then
@@ -10,20 +18,21 @@ if [ ! -d "$root" ]; then
     exit 1
 fi
 
-for dir in $root/*; do
-    if [ -d "$dir" ]; then
-        for arg in "${@:2}"; do
-            temp=$(basename $(jq -r '.parameters.in' $dir/run_$arg/short_summary.json) | sed 's/_/__/2')
-            accession=${temp%__*}
-            ./scripts/raw-to-s3.py \
-                -c scripts/config/busco.yaml \
-                -d $dir \
-                -b molluscdb \
-                -p latest \
-                -u https://cog.sanger.ac.uk \
-                --vars accession=$accession lineage=$arg
-        done
+
+while IFS= read -r line; do
+    accession=$(echo "$line" | jq -r '.reports[0] | .accession')
+    echo "$line" | jq -r '.reports[0] | {"assembly_name": .assembly_info.assembly_name, "taxon_id": .organism.tax_id, "scientific_name": .organism.organism_name}' > $accession.assembly_info.json
+    s3cmd put setacl --acl-public $accession.assembly_info.json s3://molluscdb/latest/$accession/assembly_info.json
+    rm $accession.assembly_info.json
+    if [[ "$accession" == GC* ]]; then
+        ./scripts/raw-to-s3.py \
+            -c scripts/config/busco.yaml \
+            -d $root \
+            -b molluscdb \
+            -p latest \
+            -u https://cog.sanger.ac.uk \
+            --vars accession=$accession lineage=$arg
     fi
-done
+done < "$jsonl"
 
 

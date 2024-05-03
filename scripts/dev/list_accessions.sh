@@ -13,9 +13,13 @@ fi
 for dir in $root/*; do
     if [ -d "$dir" ]; then
         for arg in "${@:2}"; do
-            temp=$(basename $(jq -r '.parameters.in' $dir/run_$arg/short_summary.json) | sed 's/_/__/2')
-            accession=${temp%__*}
-            echo $accession
+            if [ -e $dir/run_$arg/short_summary.json ]; then
+                temp=$(basename $(jq -r '.parameters.in' $dir/run_$arg/short_summary.json) | sed 's/_/__/2' | sed 's/\./__/2')
+                if [[ "$temp" == GC* ]]; then
+                    accession=${temp%%__*}
+                    echo $accession
+                fi
+            fi
         done
     fi
 done
