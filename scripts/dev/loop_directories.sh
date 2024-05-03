@@ -21,19 +21,23 @@ fi
 
 while IFS= read -r line; do
     accession=$(echo "$line" | jq -r '.reports[0] | .accession')
+    name=$(echo "$line" | jq -r '.reports[0] | .organism.organism_name')
     echo "$line" | jq -r '.reports[0] | {"assembly_name": .assembly_info.assembly_name, "taxon_id": .organism.tax_id, "scientific_name": .organism.organism_name}' > $accession.assembly_info.json
     s3cmd put setacl --acl-public $accession.assembly_info.json s3://molluscdb/latest/$accession/assembly_info.json
     rm $accession.assembly_info.json
     if [[ "$accession" == GC* ]]; then
-        for arg in "${@:2}"; do
-            ./scripts/raw-to-s3.py \
-                -c scripts/config/busco.yaml \
-                -d $dir \
-                -b molluscdb \
-                -p latest \
-                -u https://cog.sanger.ac.uk \
-                --vars accession=$accession lineage=$arg
-        done
+        dir=$root/${name// /_}
+        if [ -d "$dir" ]; then
+            for arg in "${@:2}"; do
+                ./scripts/raw-to-s3.py \
+                    -c scripts/config/busco.yaml \
+                    -d $dir \
+                    -b molluscdb \
+                    -p latest \
+                    -u https://cog.sanger.ac.uk \
+                    --vars accession=$accession lineage=$arg
+            done
+        fi
     fi
 done < "$jsonl"
 
