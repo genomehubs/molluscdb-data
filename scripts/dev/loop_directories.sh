@@ -25,13 +25,15 @@ while IFS= read -r line; do
     s3cmd put setacl --acl-public $accession.assembly_info.json s3://molluscdb/latest/$accession/assembly_info.json
     rm $accession.assembly_info.json
     if [[ "$accession" == GC* ]]; then
-        ./scripts/raw-to-s3.py \
-            -c scripts/config/busco.yaml \
-            -d $root \
-            -b molluscdb \
-            -p latest \
-            -u https://cog.sanger.ac.uk \
-            --vars accession=$accession lineage=$arg
+        for arg in "${@:2}"; do
+            ./scripts/raw-to-s3.py \
+                -c scripts/config/busco.yaml \
+                -d $dir \
+                -b molluscdb \
+                -p latest \
+                -u https://cog.sanger.ac.uk \
+                --vars accession=$accession lineage=$arg
+        done
     fi
 done < "$jsonl"
 
