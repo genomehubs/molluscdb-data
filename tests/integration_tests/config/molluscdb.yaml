@@ -6,7 +6,7 @@ common:
     timeout: 30
   hub:
     name: molluscdb
-    path: ~/projects/genomehubs/boat-resources
+    path: ~/projects/genomehubs/molluscdb-resources
     separator: --
     version: 2021.10.15
   log:
@@ -19,7 +19,7 @@ common:
     file:
       - names.dmp
       - nodes.dmp
-    path: ~/projects/genomehubs/molluscdb-data/tests/integration_tests/taxonomy
+    path: ~/projects/genomehubs/molluscdb-data/scripts/dev/taxonomy
 fill: {}
 index:
   taxonomy:

@@ -23,12 +23,13 @@ genomehubs init \
 genomehubs index \
     --config-file tests/integration_tests/config/molluscdb.yaml \
     --taxonomy-source ncbi \
-    --assembly-dir tests/integration_tests/sources/assembly-data &&
-# genomehubs fill \
-#     --config-file tests/integration_tests/config/boat.yaml \
-#     --taxonomy-source ncbi \
-#     --traverse-root 7088 \
-#     --traverse-infer-both &&
+    --assembly-dir scripts/dev/assembly-data &&
+#    --assembly-dir tests/integration_tests/sources/assembly-data &&
+genomehubs fill \
+    --config-file tests/integration_tests/config/molluscdb.yaml \
+    --taxonomy-source ncbi \
+    --traverse-root 6447 \
+    --traverse-infer-both &&
 # genomehubs index \
 #     --config-file tests/integration_tests/config/boat.yaml \
 #     --taxonomy-source ncbi \

@@ -27,8 +27,9 @@ while IFS= read -r line; do
     rm $accession.assembly_info.json
     if [[ "$accession" == GC* ]]; then
         dir=$root/${name// /_}
-        if [ -d "$dir" ]; then
-            for arg in "${@:2}"; do
+        echo $dir
+        for arg in "${@:2}"; do
+            if [ -d "$dir" ] && [ -f "$dir/run_$arg/short_summary.txt" ]; then
                 ./scripts/raw-to-s3.py \
                     -c scripts/config/busco.yaml \
                     -d $dir \
@@ -36,8 +37,8 @@ while IFS= read -r line; do
                     -p latest \
                     -u https://cog.sanger.ac.uk \
                     --vars accession=$accession lineage=$arg
-            done
-        fi
+            fi
+        done
     fi
 done < "$jsonl"
 
