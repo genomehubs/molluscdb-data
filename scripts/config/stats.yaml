@@ -1,0 +1,28 @@
+bucket: molluscdb
+vars:
+  - accession
+files:
+  - filename: "{accession}.chunk_stats.tsv"
+    s3path: latest/{accession}/stats/chunk_stats.tsv.gz
+    mime_type: application-gzip
+    content_disposition: attachment
+  - filename: "{accession}.window_stats.tsv"
+    s3path: latest/{accession}/stats/window_stats.tsv.gz
+    mime_type: application-gzip
+    content_disposition: attachment
+  - filename: "{accession}.window_stats.0.1.tsv"
+    s3path: latest/{accession}/stats/window_stats.0.1.tsv.gz
+    mime_type: application-gzip
+    content_disposition: attachment
+  - filename: "{accession}.window_stats.0.01.tsv"
+    s3path: latest/{accession}/stats/window_stats.0.01.tsv.gz
+    mime_type: application-gzip
+    content_disposition: attachment
+  - filename: "{accession}.window_stats.100000.tsv"
+    s3path: latest/{accession}/stats/window_stats.100000.tsv.gz
+    mime_type: application-gzip
+    content_disposition: attachment
+  - filename: "{accession}.window_stats.1000000.tsv"
+    s3path: latest/{accession}/stats/window_stats.1000000.tsv.gz
+    mime_type: application-gzip
+    content_disposition: attachment
