@@ -4,34 +4,34 @@ vars:
   - lineage
 files:
   - filename: run_{lineage}/full_table.tsv
-    s3path: latest/{accession}/busco/{lineage}/full_table.tsv
+    s3path: "{prefix}/{accession}/busco/{lineage}/full_table.tsv"
     mime_type: text/tab-separated-values
     content_disposition: attachment
   - filename: run_{lineage}/missing_busco_list.tsv
-    s3path: latest/{accession}/busco/{lineage}/missing_busco_list.tsv
+    s3path: "{prefix}/{accession}/busco/{lineage}/missing_busco_list.tsv"
     mime_type: text/tab-separated-values
     content_disposition: attachment
   - filename: run_{lineage}/short_summary.json
-    s3path: latest/{accession}/busco/{lineage}/short_summary.json
+    s3path: "{prefix}/{accession}/busco/{lineage}/short_summary.json"
     mime_type: text/json
     content_disposition: attachment
   - filename: run_{lineage}/short_summary.txt
-    s3path: latest/{accession}/busco/{lineage}/short_summary.txt
+    s3path: "{prefix}/{accession}/busco/{lineage}/short_summary.txt"
     mime_type: text/plain
     content_disposition: inline
   - filename: run_{lineage}/hmmer_output
-    s3path: latest/{accession}/busco/{lineage}/hmmer_output.tar.gz
+    s3path: "{prefix}/{accession}/busco/{lineage}/hmmer_output.tar.gz"
     mime_type: application/gzip
     content_disposition: attachment
   - filename: run_{lineage}/busco_sequences/fragmented_busco_sequences
-    s3path: latest/{accession}/busco/{lineage}/busco_sequences/fragmented_busco_sequences.tar.gz
+    s3path: "{prefix}/{accession}/busco/{lineage}/busco_sequences/fragmented_busco_sequences.tar.gz"
     mime_type: application/gzip
     content_disposition: attachment
   - filename: run_{lineage}/busco_sequences/multi_copy_busco_sequences
-    s3path: latest/{accession}/busco/{lineage}/busco_sequences/multi_copy_busco_sequences.tar.gz
+    s3path: "{prefix}/{accession}/busco/{lineage}/busco_sequences/multi_copy_busco_sequences.tar.gz"
     mime_type: application/gzip
     content_disposition: attachment
   - filename: run_{lineage}/busco_sequences/single_copy_busco_sequences
-    s3path: latest/{accession}/busco/{lineage}/busco_sequences/single_copy_busco_sequences.tar.gz
+    s3path: "{prefix}/{accession}/busco/{lineage}/busco_sequences/single_copy_busco_sequences.tar.gz"
     mime_type: application/gzip
     content_disposition: attachment

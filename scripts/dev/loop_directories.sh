@@ -39,7 +39,7 @@ while IFS= read -r line; do
                     -b molluscdb \
                     -p $date \
                     -u https://cog.sanger.ac.uk \
-                    --vars accession=$accession lineage=$arg
+                    --vars prefix=$date accession=$accession lineage=$arg
             fi
         done
     fi
