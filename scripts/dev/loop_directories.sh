@@ -20,8 +20,10 @@ fi
 
 date=$(date +%Y-%m)
 
+
 while IFS= read -r line; do
     accession=$(echo "$line" | jq -r '.reports[0] | .accession')
+    
     name=$(echo "$line" | jq -r '.reports[0] | .organism.organism_name')
     echo "$line" | jq -r '.reports[0] | {"assembly_name": .assembly_info.assembly_name, "taxon_id": .organism.tax_id, "scientific_name": .organism.organism_name}' > $accession.assembly_info.json
     s3cmd put setacl --acl-public $accession.assembly_info.json s3://molluscdb/$date/$accession/assembly_info.json
@@ -31,17 +33,13 @@ while IFS= read -r line; do
         echo $dir
         for arg in "${@:2}"; do
             if [ -d "$dir" ] && [ -f "$dir/run_$arg/short_summary.txt" ]; then
-                if [ -n "$translated_arg" ]; then
-                    ./scripts/raw-to-s3.py \
-                        -c scripts/config/busco.yaml \
-                        -d $dir \
-                        -b molluscdb \
-                        -p $date \
-                        -u https://cog.sanger.ac.uk \
-                        --vars accession=$accession lineage=$translated_arg
-                else
-                    echo "Error: No translation found for $arg"
-                fi
+                ./scripts/raw-to-s3.py \
+                    -c scripts/config/busco.yaml \
+                    -d $dir \
+                    -b molluscdb \
+                    -p $date \
+                    -u https://cog.sanger.ac.uk \
+                    --vars accession=$accession lineage=$arg
             fi
         done
     fi
