@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+import sys
 from collections import defaultdict
+from functools import reduce
 from typing import Any, Optional
 
 import boto3
@@ -20,7 +22,7 @@ def parse_args() -> argparse.Namespace:
     bucket: str = "molluscdb"
     prefix: str = "latest"
     url: str = "https://cog.sanger.ac.uk"
-    config: str = "tests/integration_tests/sources/assembly-data/files.types.yaml"
+    config: str = "tests/integration_tests/sources/assembly-features"
     attribute: str = "files"
 
     parser.add_argument("--bucket", default=bucket)
@@ -35,7 +37,7 @@ def parse_args() -> argparse.Namespace:
         "-c",
         "--config",
         default=config,
-        help="path to config file",
+        help="path to config directory",
     )
     parser.add_argument("--attribute", default=attribute)
     return parser.parse_args()
@@ -191,11 +193,8 @@ def get_entries(
     """
 
     entries: dict[str, list[Any]] = defaultdict(list)
-    try:
-        set_assembly_id(assembly_dir, entries)
-        set_taxon_id(s3, bucket, assembly_dir, entries)
-    except Exception:
-        return entries
+    set_assembly_id(assembly_dir, entries)
+    set_taxon_id(s3, bucket, assembly_dir, entries)
     for subdir in subdirs:
         if subdir not in file_paths:
             continue
@@ -225,6 +224,136 @@ def get_entries(
     return entries
 
 
+def extract_value_from_string(string: str, substring1: str, substring2: str) -> str:
+    """
+    Extract the value from a string.
+
+    Args:
+        string (str): The input string.
+
+    Returns:
+        str: The extracted value.
+    """
+    start_index = string.find(substring1) + len(substring1)
+    end_index = string.find(substring2)
+    return string[start_index:end_index]
+
+
+def replace_substrings(template: dict, assembly_info: dict) -> dict:
+    """
+    Replace substrings in the template with corresponding values from assembly_info.
+
+    Args:
+        template (dict): The template dictionary.
+        assembly_info (dict): The assembly information dictionary.
+
+    Returns:
+        dict: The modified template dictionary.
+    """
+    for key, value in template.items():
+        if isinstance(value, dict):
+            template[key] = replace_substrings(value, assembly_info)
+        elif isinstance(value, str):
+            for info_key, info_value in assembly_info.items():
+                value = value.replace(f"{{{info_key}}}", str(info_value))
+            template[key] = value
+        elif isinstance(value, list):
+            for index, item in enumerate(value):
+                if isinstance(item, dict):
+                    value[index] = replace_substrings(item, assembly_info)
+                elif isinstance(item, str):
+                    for info_key, info_value in assembly_info.items():
+                        item = item.replace(f"{{{info_key}}}", str(info_value))
+                    value[index] = item
+            template[key] = value
+    return template
+
+
+def load_template(args, assembly_info, template_name):
+    try:
+        template_file = f"{args.config}/TEMPLATE_{template_name}.yaml"
+        template = gh_utils.load_yaml(template_file)
+        replaced_template = replace_substrings(template, assembly_info)
+        meta = gh_utils.get_metadata(replaced_template, template_file)
+        headers = gh_utils.set_headers(replaced_template)
+        parse_fns = gh_utils.get_parse_functions(replaced_template)
+    except FileNotFoundError:
+        print(f"Template file {template_file} not found. Exiting.")
+        sys.exit(1)
+    return replaced_template, meta, headers, parse_fns
+
+
+def create_file_pair(yaml_template, meta, headers, rows):
+    yaml_file = meta["file_name"].replace(".tsv", ".types.yaml").replace(".gz", "")
+    gh_utils.write_yaml(yaml_template, yaml_file)
+    gh_utils.print_to_tsv(headers, rows, meta)
+
+
+def process_window_stats(
+    s3: boto3.resources.base.ServiceResource, args, prefix: str, assembly_info: dict
+):
+    files = gh_utils.list_files(s3, args.bucket, f"{prefix}stats/")
+    sequence_template, meta, headers, parse_fns = load_template(
+        args, assembly_info, "window_stats"
+    )
+    span = 0
+    file_names = {}
+
+    for file in files:
+        if "window_stats" in file:
+            if window_size := extract_value_from_string(file, "window_stats.", ".tsv"):
+                file_names[window_size] = file
+            else:
+                feature_type = ["chromosome", "toplevel", "sequence"]
+                rows = parse_tsv(s3, args, parse_fns, file, feature_type)
+                span = reduce(lambda x, y: x + int(y["length"]), rows, 0)
+
+                create_file_pair(
+                    replace_substrings(sequence_template, {"span": span}),
+                    meta,
+                    headers,
+                    rows,
+                )
+
+    for window_size, file in file_names.items():
+        feature_type = [f"window-{window_size}", "window"]
+        window_template, meta, headers, parse_fns = load_template(
+            args, {**assembly_info, "window": window_size}, "window_stats.WINDOW"
+        )
+        rows = parse_tsv(s3, args, parse_fns, file, feature_type)
+        create_file_pair(window_template, meta, headers, rows)
+
+
+def parse_tsv(s3, args, parse_fns, file, feature_type=None, skip=0):
+    rows = []
+    lines = gh_utils.load_tsv_from_s3(s3, args.bucket, file, skip=skip)
+    for line in lines:
+        row = gh_utils.parse_report_values(parse_fns, line)
+        if feature_type is not None:
+            row["feature_type"] = feature_type
+        rows.append(row)
+    return rows
+
+
+def process_busco(
+    s3: boto3.resources.base.ServiceResource, args, prefix: str, assembly_info: dict
+):
+    lineages = gh_utils.list_subdirectories(s3, args.bucket, f"{prefix}busco/")
+    for lineage in lineages:
+        template, meta, headers, parse_fns = load_template(
+            args, {**assembly_info, "lineage": lineage}, "busco"
+        )
+        feature_type = [f"{lineage}-busco-gene", "busco-gene", "gene"]
+
+        file = f"{prefix}busco/{lineage}/full_table.tsv"
+        rows = [
+            row
+            for row in parse_tsv(s3, args, parse_fns, file, feature_type, skip=2)
+            if row["status"] != "Missing"
+        ]
+        create_file_pair(template, meta, headers, rows)
+
+
 def main():
     """
     Main entry point for the script. Parses command line arguments, loads
@@ -242,23 +371,35 @@ def main():
 
     s3 = gh_utils.get_s3_client(args.url)
 
-    config = gh_utils.load_yaml(args.config)
-    meta = gh_utils.get_metadata(config, args.config, args.attribute)
-    file_paths = meta.get("file_paths", {})
+    # config = gh_utils.load_yaml(args.config)
+    # meta = gh_utils.get_metadata(config, args.config, args.attribute)
+    # file_paths = meta.get("file_paths", {})
 
     assembly_dirs = gh_utils.get_directories_by_prefix(s3, args.bucket, args.prefix)
-    rows = []
+    assembly_dirs = ["latest/GCA_964016885.1/", "latest/GCA_964016985.1/"]
+    # rows = []
 
     for assembly_dir in assembly_dirs:
-        print(assembly_dir)
         subdirs = gh_utils.list_subdirectories(s3, args.bucket, assembly_dir)
-        entries = get_entries(
-            s3, args.bucket, assembly_dir, subdirs, file_paths, args.attribute
-        )
-        rows.append(entries)
+        if "stats" not in subdirs:
+            continue
 
-    headers = gh_utils.set_headers(config)
-    gh_utils.print_to_tsv(headers, rows, meta)
+        assembly_info = gh_utils.load_json_from_s3(
+            s3, args.bucket, f"{assembly_dir}assembly_info.json"
+        )
+        assembly_info.update({"assembly_id": assembly_dir.split("/")[-2]})
+
+        process_window_stats(s3, args, assembly_dir, assembly_info)
+
+        process_busco(s3, args, assembly_dir, assembly_info)
+
+        # entries = get_entries(
+        #     s3, args.bucket, assembly_dir, subdirs, file_paths, args.attribute
+        # )
+        # rows.append(entries)
+
+    # headers = gh_utils.set_headers(config)
+    # gh_utils.print_to_tsv(headers, rows, meta)
 
 
 if __name__ == "__main__":

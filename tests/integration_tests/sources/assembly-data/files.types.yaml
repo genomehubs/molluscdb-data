@@ -114,12 +114,45 @@ attributes:
             - icon: download
               pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/blastn.nt.out.gz
               title: Download blastn.nt.out.gz file from molluscdb.cog.sanger.ac.uk
-        chunk_stats:
+      stats:
+        color: "#ff7001"
+        all: true
+        sequence:
+          name: window_stats.tsv.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.tsv.gz
+              title: Download window_stats.tsv.gz file from molluscdb.cog.sanger.ac.uk
+        1kb:
           name: chunk_stats.tsv.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/chunk_stats.tsv.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.chunk_stats.tsv.gz
               title: Download chunk_stats.tsv.gz file from molluscdb.cog.sanger.ac.uk
+        1%:
+          name: window_stats.0.01.tsv.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.0.01.tsv.gz
+              title: Download window_stats.0.01.tsv.gz file from molluscdb.cog.sanger.ac.uk
+        10%:
+          name: window_stats.0.1.tsv.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.0.1.tsv.gz
+              title: Download window_stats.0.1.tsv.gz file from molluscdb.cog.sanger.ac.uk
+        100kb:
+          name: window_stats.100000.tsv.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.100000.tsv.gz
+              title: Download window_stats.100000.tsv.gz file from molluscdb.cog.sanger.ac.uk
+        1Mb:
+          name: window_stats.1000000.tsv.gz
+          links:
+            - icon: download
+              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.1000000.tsv.gz
+              title: Download window_stats.1000000.tsv.gz file from molluscdb.cog.sanger.ac.uk
     header: files
     separator: ","
     type: keyword
@@ -144,6 +177,9 @@ attributes:
     separator: ","
   files.blobtoolkit.all:
     header: files.blobtoolkit.all
+    separator: ","
+  files.stats.all:
+    header: files.stats.all
     separator: ","
 taxonomy:
   taxon_id:

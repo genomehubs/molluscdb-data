@@ -1,0 +1,71 @@
+analysis:
+  analysis_id: busco5-{lineage}-{assembly_id}
+  assembly_id: "{assembly_id}"
+  description: BUSCO v5 analysis of {assembly_id} using {lineage} lineage
+  name: BUSCO_{lineage}
+  taxon_id: "{taxon_id}"
+  title: BUSCO v5 {assembly_id} {lineage}
+attributes:
+  analysis_name:
+    default: BUSCO_{lineage}
+  ancestral_unit:
+    header: busco_id
+  busco_gene:
+    header: busco_id
+    path: "# Busco id"
+  busco_score:
+    header: score
+    path: Score
+  busco_status:
+    header: status
+    path: Status
+  end:
+    header: end
+    path: Gene End
+  feature_type:
+    header: feature_type
+    separator: ","
+  length:
+    header: length
+    path: Length
+  midpoint:
+    function: "{length} / 2 + {}"
+    header: start
+  midpoint_proportion:
+    function: "{midpoint} / {.length}"
+    header: sequence_id
+    # limit: 1
+    # separator:
+    #   - ":"
+  sequence_id:
+    header: sequence_id
+    path: Sequence
+  start:
+    header: start
+    path: Gene Start
+  strand:
+    header: strand
+    path: Strand
+    translate:
+      "+": 1
+      "-": -1
+features:
+  assembly_id: "{assembly_id}"
+  feature_id:
+    header: sequence_id
+    # limit: 1
+    # separator:
+    #   - ":"
+    template: "{}:{start}-{end}:{busco_gene}"
+  primary_type: "{lineage}-busco-gene"
+file:
+  format: tsv
+  header: true
+  name: "{assembly_id}.busco.{lineage}.tsv"
+  needs:
+    - ATTR_busco.types.yaml
+    - ATTR_feature.types.yaml
+    - ATTR_ancestral_unit.types.yaml
+    - "{assembly_id}.window_stats.types.yaml"
+taxonomy:
+  taxon_id: "{taxon_id}"

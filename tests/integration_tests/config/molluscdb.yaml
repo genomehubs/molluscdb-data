@@ -12,7 +12,7 @@ common:
   log:
     es: false
     fetch: false
-    interval: 10
+    interval: 1000
   taxonomy:
     format: ncbi
     url: "ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz"

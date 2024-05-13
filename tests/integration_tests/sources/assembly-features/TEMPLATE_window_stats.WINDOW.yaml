@@ -1,0 +1,61 @@
+analysis:
+  analysis_id: assembly-{assembly_id}-{window}
+  assembly_id: "{assembly_id}"
+  description: Public assembly {assembly_id} {window} windows
+  name: Assembly-{window}
+  taxon_id: "{taxon_id}"
+  title: Public assembly {assembly_id} {window}
+attributes:
+  # busco_count:
+  #   header: "{busco_lineage}_count"
+  # coverage:
+  #   function: '{} + 0.01'
+  #   header: "{sra_accession}_cov"
+  end:
+    header: end
+    path: end
+  feature_type:
+    header: feature_type
+    separator: ","
+  gc:
+    header: gc
+    path: gc
+  length:
+    function: "{end} - {}"
+    header: start
+  masked:
+    header: masked
+    path: masked
+  midpoint:
+    function: "{length} / 2 + {} + 1"
+    header: start
+  midpoint_proportion:
+    function: "{midpoint} / {.length}"
+    header: sequence_id
+  seq_proportion:
+    function: "{length} / {.length}"
+    header: sequence_id
+  sequence_id:
+    header: sequence_id
+    path: sequence
+  start:
+    function: "{} + 1"
+    header: start
+    path: start
+  strand: 1
+features:
+  assembly_id: "{assembly_id}"
+  feature_id:
+    header: sequence_id
+    template: "{}:{start}-{end}:window-{window}"
+  primary_type: window-{window}
+file:
+  format: tsv
+  header: true
+  name: "{assembly_id}.window_stats.{window}.tsv"
+  needs:
+    - ATTR_feature.types.yaml
+    - ATTR_window_stats.types.yaml
+    - "{assembly_id}.window_stats.types.yaml"
+taxonomy:
+  taxon_id: "{taxon_id}"

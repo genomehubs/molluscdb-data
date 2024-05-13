@@ -1,0 +1,61 @@
+analysis:
+  analysis_id: assembly-{assembly_id}
+  assembly_id: "{assembly_id}"
+  description: Public assembly {assembly_id}
+  name: Assembly
+  taxon_id: "{taxon_id}"
+  title: Public assembly {assembly_id}
+attributes:
+  # busco_count:
+  #   header: "{busco_lineage}_count"
+  # coverage:
+  #   function: '{} + 0.01'
+  #   header: "{sra_accession}_cov"
+  end:
+    header: end
+    path: end
+  feature_type:
+    header: feature_type
+    separator: ","
+  gc:
+    header: gc
+    path: gc
+  length:
+    header: length
+    path: end
+  masked:
+    header: masked
+    path: masked
+  midpoint:
+    function: "{length} / 2"
+    header: end
+  seq_proportion:
+    function: "{} / {span}"
+    header: end
+  sequence_id:
+    header: sequence_id
+    path: sequence
+  start:
+    function: "{} + 1"
+    header: start
+    path: start
+  strand: 1
+features:
+  assembly_id: "{assembly_id}"
+  feature_id:
+    header: sequence_id
+  primary_type: chromosome
+file:
+  format: tsv
+  header: true
+  name: "{assembly_id}.window_stats.tsv"
+  needs:
+    - ATTR_feature.types.yaml
+    - ATTR_window_stats.types.yaml
+identifiers:
+  # assigned_name:
+  #   header: assigned_name
+  genbank_accession:
+    header: sequence_id
+taxonomy:
+  taxon_id: "{taxon_id}"
