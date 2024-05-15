@@ -6,8 +6,12 @@ analysis:
   taxon_id: "{taxon_id}"
   title: Public assembly {assembly_id}
 attributes:
-  # busco_count:
-  #   header: "{busco_lineage}_count"
+  mollusca_busco_count:
+    header: mollusca_busco_count
+    path: mollusca_odb10_count
+  metazoa_busco_count:
+    header: metazoa_busco_count
+    path: metazoa_odb10_count
   # coverage:
   #   function: '{} + 0.01'
   #   header: "{sra_accession}_cov"

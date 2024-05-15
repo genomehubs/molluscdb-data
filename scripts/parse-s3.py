@@ -18,7 +18,7 @@ def parse_args() -> argparse.Namespace:
 
     parser: argparse.ArgumentParser = argparse.ArgumentParser()
     bucket: str = "molluscdb"
-    prefix: str = "latest"
+    prefix: str = "2024-05"
     url: str = "https://cog.sanger.ac.uk"
     config: str = "tests/integration_tests/sources/assembly-data/files.types.yaml"
     attribute: str = "files"
@@ -168,6 +168,63 @@ def set_assembly_id(latest_dir: str, entries: dict[str, list]) -> dict[str, list
     return entries
 
 
+def set_busco_counts(
+    s3: boto3.resources.base.ServiceResource,
+    bucket: str,
+    prefix: str,
+    subdir: str,
+    run: str,
+    entries: dict[str, list],
+) -> dict[str, list]:
+    """Set the BUSCO counts in the entries dict.
+
+    Args:
+        s3: The S3 resource object
+        bucket: The name of the S3 bucket
+        prefix: The base directory prefix
+        subdir: The analysis subdirectory
+        run: The run name
+        entries: The dictionary to update
+    """
+
+    file = f"{prefix}{subdir}/{run}/short_summary.json"
+    if not gh_utils.check_s3_file_exists(s3, bucket, file):
+        return entries
+
+    data = gh_utils.load_json_from_s3(s3, bucket, file)
+    name = data["lineage_dataset"]["name"]
+    statuses = {
+        "complete": "Complete",
+        "single": "Single copy",
+        "duplicated": "Multi copy",
+        "fragmented": "Fragmented",
+        "missing": "Missing",
+    }
+    for status, key in statuses.items():
+        entries[f"{name}_{status}_percent"] = data["results"][f"{key} percentage"]
+
+    file = f"{prefix}{subdir}/{run}/full_table.tsv"
+    if not gh_utils.check_s3_file_exists(s3, bucket, file):
+        return entries
+
+    rows = gh_utils.load_tsv_from_s3(s3, bucket, file, skip=2)
+    ids = {
+        "Complete": set(),
+        "Duplicated": set(),
+        "Fragmented": set(),
+        "Missing": set(),
+    }
+    for row in rows:
+        ids[row["Status"]].add(row["# Busco id"])
+    entries[f"{name}_complete"] = list(ids["Complete"].union(ids["Duplicated"]))
+    entries[f"{name}_duplicated"] = list(ids["Duplicated"])
+    entries[f"{name}_fragmented"] = list(ids["Fragmented"])
+    entries[f"{name}_missing"] = list(ids["Missing"])
+    entries[f"{name}_single"] = list(ids["Complete"])
+
+    return entries
+
+
 def get_entries(
     s3: Any,
     bucket: str,
@@ -220,6 +277,16 @@ def get_entries(
                         attribute,
                         entries,
                     )
+        if subdir == "busco":
+            for run in runs:
+                set_busco_counts(
+                    s3,
+                    bucket,
+                    assembly_dir,
+                    subdir,
+                    run,
+                    entries,
+                )
         if f"{attribute}.{subdir}.run" in entries:
             entries[attribute].append(subdir)
     return entries
@@ -256,7 +323,6 @@ def main():
             s3, args.bucket, assembly_dir, subdirs, file_paths, args.attribute
         )
         rows.append(entries)
-
     headers = gh_utils.set_headers(config)
     gh_utils.print_to_tsv(headers, rows, meta)
 

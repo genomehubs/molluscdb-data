@@ -21,99 +21,99 @@ attributes:
           name: full_table.tsv
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/full_table.tsv
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/full_table.tsv
               title: Download full_table.tsv file from molluscdb.cog.sanger.ac.uk
         short_summary:
           name: short_summary.txt
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/short_summary.txt
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/short_summary.txt
               title: Download short_summary.txt file from molluscdb.cog.sanger.ac.uk
         hmmer:
           name: hmmer_output.tar.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/hmmer_output.tar.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/hmmer_output.tar.gz
               title: Download hmmer_output.tar.gz file from molluscdb.cog.sanger.ac.uk
         missing:
           name: missing_busco_list.tsv
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/missing_busco_list.tsv
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/missing_busco_list.tsv
               title: Download missing_busco_list.tsv file from molluscdb.cog.sanger.ac.uk
         json_summary:
           name: short_summary.json
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/short_summary.json
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/short_summary.json
               title: Download short_summary.json file from molluscdb.cog.sanger.ac.uk
         single_copy:
           name: busco_sequences/single_copy_busco_sequences.tar.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/busco_sequences/single_copy_busco_sequences.tar.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/busco_sequences/single_copy_busco_sequences.tar.gz
               title: Download single_copy_busco_sequences.tar.gz file from molluscdb.cog.sanger.ac.uk
         multi_copy:
           name: busco_sequences/multi_copy_busco_sequences.tar.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/busco_sequences/multi_copy_busco_sequences.tar.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/busco_sequences/multi_copy_busco_sequences.tar.gz
               title: Download multi_copy_busco_sequences.tar.gz file from molluscdb.cog.sanger.ac.uk
         fragmented:
           name: busco_sequences/fragmented_busco_sequences.tar.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/busco/{run}/busco_sequences/fragmented_busco_sequences.tar.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/busco/{run}/busco_sequences/fragmented_busco_sequences.tar.gz
               title: Download fragmented_busco_sequences.tar.gz file from molluscdb.cog.sanger.ac.uk
 
-      blobtoolkit:
-        color: "#9c528b"
-        all: true
-        blob:
-          name: images/blob.png
-          links:
-            - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/images/blob.png
-              title: Download blob plot from molluscdb.cog.sanger.ac.uk
-            - icon: view
-              pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/blob
-              title: View interactive blob plot at blobtoolkit.genomehubs.org
-        cumulative:
-          name: images/cumulative.png
-          links:
-            - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/images/cumulative.png
-              title: Download cumulative plot from molluscdb.cog.sanger.ac.uk
-            - icon: view
-              pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/cumulative
-              title: View interactive cumulative plot at blobtoolkit.genomehubs.org
-        snail:
-          name: images/snail.png
-          links:
-            - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/images/snail.png
-              title: Download snail plot from molluscdb.cog.sanger.ac.uk
-            - icon: view
-              pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/snail
-              title: View interactive snail plot at snail.genomehubs.org
-        blobdir:
-          name: blobdir.tar
-          links:
-            - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/blobdir.tar
-              title: Download blobdir from molluscdb.cog.sanger.ac.uk
-        config:
-          name: config.yaml
-          links:
-            - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/config.yaml
-              title: Download config.yaml file from molluscdb.cog.sanger.ac.uk
-        blastn:
-          name: blastn.nt.out.gz
-          links:
-            - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/blobtoolkit/blastn.nt.out.gz
-              title: Download blastn.nt.out.gz file from molluscdb.cog.sanger.ac.uk
+      # blobtoolkit:
+      #   color: "#9c528b"
+      #   all: true
+      #   blob:
+      #     name: images/blob.png
+      #     links:
+      #       - icon: download
+      #         pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/blobtoolkit/images/blob.png
+      #         title: Download blob plot from molluscdb.cog.sanger.ac.uk
+      #       - icon: view
+      #         pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/blob
+      #         title: View interactive blob plot at blobtoolkit.genomehubs.org
+      #   cumulative:
+      #     name: images/cumulative.png
+      #     links:
+      #       - icon: download
+      #         pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/blobtoolkit/images/cumulative.png
+      #         title: Download cumulative plot from molluscdb.cog.sanger.ac.uk
+      #       - icon: view
+      #         pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/cumulative
+      #         title: View interactive cumulative plot at blobtoolkit.genomehubs.org
+      #   snail:
+      #     name: images/snail.png
+      #     links:
+      #       - icon: download
+      #         pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/blobtoolkit/images/snail.png
+      #         title: Download snail plot from molluscdb.cog.sanger.ac.uk
+      #       - icon: view
+      #         pattern: https://blobtoolkit.genomehubs.org/view/dataset/{files.blobtoolkit.run}/snail
+      #         title: View interactive snail plot at snail.genomehubs.org
+      #   blobdir:
+      #     name: blobdir.tar
+      #     links:
+      #       - icon: download
+      #         pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/blobtoolkit/blobdir.tar
+      #         title: Download blobdir from molluscdb.cog.sanger.ac.uk
+      #   config:
+      #     name: config.yaml
+      #     links:
+      #       - icon: download
+      #         pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/blobtoolkit/config.yaml
+      #         title: Download config.yaml file from molluscdb.cog.sanger.ac.uk
+      #   blastn:
+      #     name: blastn.nt.out.gz
+      #     links:
+      #       - icon: download
+      #         pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/blobtoolkit/blastn.nt.out.gz
+      #         title: Download blastn.nt.out.gz file from molluscdb.cog.sanger.ac.uk
       stats:
         color: "#ff7001"
         all: true
@@ -121,41 +121,47 @@ attributes:
           name: window_stats.tsv.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.tsv.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/stats/window_stats.tsv.gz
               title: Download window_stats.tsv.gz file from molluscdb.cog.sanger.ac.uk
         1kb:
           name: chunk_stats.tsv.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.chunk_stats.tsv.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/stats/chunk_stats.tsv.gz
               title: Download chunk_stats.tsv.gz file from molluscdb.cog.sanger.ac.uk
         1%:
           name: window_stats.0.01.tsv.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.0.01.tsv.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/stats/window_stats.0.01.tsv.gz
               title: Download window_stats.0.01.tsv.gz file from molluscdb.cog.sanger.ac.uk
         10%:
           name: window_stats.0.1.tsv.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.0.1.tsv.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/stats/window_stats.0.1.tsv.gz
               title: Download window_stats.0.1.tsv.gz file from molluscdb.cog.sanger.ac.uk
         100kb:
           name: window_stats.100000.tsv.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.100000.tsv.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/stats/window_stats.100000.tsv.gz
               title: Download window_stats.100000.tsv.gz file from molluscdb.cog.sanger.ac.uk
         1Mb:
           name: window_stats.1000000.tsv.gz
           links:
             - icon: download
-              pattern: https://molluscdb.cog.sanger.ac.uk/latest/{assembly_id}/stats/{assembly_id}.window_stats.1000000.tsv.gz
+              pattern: https://molluscdb.cog.sanger.ac.uk/2024-05/{assembly_id}/stats/window_stats.1000000.tsv.gz
               title: Download window_stats.1000000.tsv.gz file from molluscdb.cog.sanger.ac.uk
     header: files
     separator: ","
     type: keyword
+    taxon_display_group: files
+    taxon_summary:
+      - list
+    taxon_traverse: list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
   files.busco.run:
     header: files.busco.run
     separator: ","
@@ -172,15 +178,311 @@ attributes:
     header: files.source.date
   files.source.name:
     header: files.source.name
-  files.blobtoolkit.run:
-    header: files.blobtoolkit.run
-    separator: ","
-  files.blobtoolkit.all:
-    header: files.blobtoolkit.all
-    separator: ","
+  # files.blobtoolkit.run:
+  #   header: files.blobtoolkit.run
+  #   separator: ","
+  # files.blobtoolkit.all:
+  #   header: files.blobtoolkit.all
+  #   separator: ","
   files.stats.all:
     header: files.stats.all
     separator: ","
+  mollusca_odb10_complete:
+    header: mollusca_odb10_complete
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: mollusca_odb10_complete
+    order:
+      - mollusca_odb10_complete
+      - mollusca_odb10_fragmented
+      - mollusca_odb10_missing
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  mollusca_odb10_duplicated:
+    header: mollusca_odb10_duplicated
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: mollusca_odb10_duplicated
+    order:
+      - mollusca_odb10_duplicated
+      - mollusca_odb10_single
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  mollusca_odb10_fragmented:
+    header: mollusca_odb10_fragmented
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: mollusca_odb10_fragmented
+    order:
+      - mollusca_odb10_complete
+      - mollusca_odb10_fragmented
+      - mollusca_odb10_missing
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  mollusca_odb10_missing:
+    header: mollusca_odb10_missing
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: mollusca_odb10_missing
+    order:
+      - mollusca_odb10_complete
+      - mollusca_odb10_fragmented
+      - mollusca_odb10_missing
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  mollusca_odb10_single:
+    header: mollusca_odb10_single
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: mollusca_odb10_duplicated
+    order:
+      - mollusca_odb10_duplicated
+      - mollusca_odb10_single
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  mollusca_odb10_complete_percent:
+    header: mollusca_odb10_complete_percent
+    type: 1dp
+    taxon_display_group: busco
+    taxon_summary:
+      - max
+    taxon_traverse: max
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+    taxon_bins:
+      min: 0
+      max: 100
+      count: 10
+      scale: linear
+  # mollusca_odb10_duplicated_percent:
+  #   header: mollusca_odb10_duplicated_percent
+  #   type:
+  #   taxon_display_group: busco
+  #   taxon_summary:
+  #     - min
+  #   taxon_traverse: min
+  #   taxon_traverse_direction: up
+  #   taxon_display_level: 2
+  #   taxon_bins:
+  #     min: 0
+  #     max: 100
+  #     count: 10
+  #     scale: linear
+  # mollusca_odb10_fragmented_percent:
+  #   header: mollusca_odb10_fragmented_percent
+  #   type: 1dp
+  #   taxon_display_group: busco
+  #   taxon_summary:
+  #     - min
+  #   taxon_traverse: min
+  #   taxon_traverse_direction: up
+  #   taxon_display_level: 2
+  #   taxon_bins:
+  #     min: 0
+  #     max: 100
+  #     count: 10
+  #     scale: linear
+  # mollusca_odb10_missing_percent:
+  #   header: mollusca_odb10_missing_percent
+  #   type: 1dp
+  #   taxon_display_group: busco
+  #   taxon_summary:
+  #     - min
+  #   taxon_traverse: min
+  #   taxon_traverse_direction: up
+  #   taxon_display_level: 2
+  #   taxon_bins:
+  #     min: 0
+  #     max: 100
+  #     count: 10
+  #     scale: linear
+  mollusca_odb10_single_percent:
+    header: mollusca_odb10_single_percent
+    type: 1dp
+    taxon_display_group: busco
+    taxon_summary:
+      - max
+    taxon_traverse: max
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+    taxon_bins:
+      min: 0
+      max: 100
+      count: 10
+      scale: linear
+  metazoa_odb10_complete:
+    header: metazoa_odb10_complete
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: metazoa_odb10_complete
+    order:
+      - metazoa_odb10_complete
+      - metazoa_odb10_fragmented
+      - metazoa_odb10_missing
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  metazoa_odb10_duplicated:
+    header: metazoa_odb10_duplicated
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: metazoa_odb10_duplicated
+    order:
+      - metazoa_odb10_duplicated
+      - metazoa_odb10_single
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  metazoa_odb10_fragmented:
+    header: metazoa_odb10_fragmented
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: metazoa_odb10_fragmented
+    order:
+      - metazoa_odb10_complete
+      - metazoa_odb10_fragmented
+      - metazoa_odb10_missing
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  metazoa_odb10_missing:
+    header: metazoa_odb10_missing
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: metazoa_odb10_missing
+    order:
+      - metazoa_odb10_complete
+      - metazoa_odb10_fragmented
+      - metazoa_odb10_missing
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  metazoa_odb10_single:
+    header: metazoa_odb10_single
+    type: keyword
+    taxon_display_group: busco
+    separator: ","
+    list_key: metazoa_odb10_single
+    order:
+      - metazoa_odb10_duplicated
+      - metazoa_odb10_single
+    summary: list
+    return_type: length
+    taxon_summary: ordered_list
+    taxon_traverse: ordered_list
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+  metazoa_odb10_complete_percent:
+    header: metazoa_odb10_complete_percent
+    type: 1dp
+    taxon_display_group: busco
+    taxon_summary:
+      - max
+    taxon_traverse: max
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+    taxon_bins:
+      min: 0
+      max: 100
+      count: 10
+      scale: linear
+  # metazoa_odb10_duplicated_percent:
+  #   header: metazoa_odb10_duplicated_percent
+  #   type: 1dp
+  #   taxon_display_group: busco
+  #   taxon_summary:
+  #     - min
+  #   taxon_traverse: min
+  #   taxon_traverse_direction: up
+  #   taxon_display_level: 2
+  #   taxon_bins:
+  #     min: 0
+  #     max: 100
+  #     count: 10
+  #     scale: linear
+  # metazoa_odb10_fragmented_percent:
+  #   header: metazoa_odb10_fragmented_percent
+  #   type: 1dp
+  #   taxon_display_group: busco
+  #   taxon_summary:
+  #     - min
+  #   taxon_traverse: min
+  #   taxon_traverse_direction: up
+  #   taxon_display_level: 2
+  #   taxon_bins:
+  #     min: 0
+  #     max: 100
+  #     count: 10
+  #     scale: linear
+  # metazoa_odb10_missing_percent:
+  #   header: metazoa_odb10_missing_percent
+  #   type: 1dp
+  #   taxon_display_group: busco
+  #   taxon_summary:
+  #     - min
+  #   taxon_traverse: min
+  #   taxon_traverse_direction: up
+  #   taxon_display_level: 2
+  #   taxon_bins:
+  #     min: 0
+  #     max: 100
+  #     count: 10
+  #     scale: linear
+  metazoa_odb10_single_percent:
+    header: metazoa_odb10_single_percent
+    type: 1dp
+    taxon_display_group: busco
+    taxon_summary:
+      - max
+    taxon_traverse: max
+    taxon_traverse_direction: up
+    taxon_display_level: 2
+    taxon_bins:
+      min: 0
+      max: 100
+      count: 10
+      scale: linear
 taxonomy:
   taxon_id:
     header: taxon_id

@@ -40,7 +40,21 @@ attributes:
     display_name: Coverage
     display_group: stats
     type: 2dp
-  busco_count:
+  mollusca_busco_count:
+    bins:
+      min: 0
+      max: 10000
+      count: 10
+      scale: linear
+    constraint:
+      min: 1
+    description: Count of Mollusca BUSCO genes
+    display_level: 1
+    display_name: Mollusca BUSCO Count
+    display_group: stats
+    type: integer
+
+  metazoa_busco_count:
     bins:
       min: 0
       max: 1000
@@ -48,8 +62,8 @@ attributes:
       scale: linear
     constraint:
       min: 1
-    description: Count of BUSCO genes
+    description: Count of Metazoa BUSCO genes
     display_level: 1
-    display_name: BUSCO Count
+    display_name: Metazoa BUSCO Count
     display_group: stats
     type: integer

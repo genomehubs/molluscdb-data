@@ -376,7 +376,12 @@ def main():
     # file_paths = meta.get("file_paths", {})
 
     assembly_dirs = gh_utils.get_directories_by_prefix(s3, args.bucket, args.prefix)
-    assembly_dirs = ["latest/GCA_964016885.1/", "latest/GCA_964016985.1/"]
+    assembly_dirs = [
+        "2024-05/GCA_001194135.2/",
+        "2024-05/GCA_024364805.1/",
+        "2024-05/GCA_963556195.1/",
+        "2024-05/GCA_964016885.1/",
+    ]
     # rows = []
 
     for assembly_dir in assembly_dirs:

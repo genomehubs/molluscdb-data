@@ -14,7 +14,7 @@ curl -X DELETE "http://localhost:9202/*2021.10.15*"
 genomehubs init \
     --config-file tests/integration_tests/config/molluscdb.yaml \
     --taxonomy-source ncbi \
-    --taxonomy-root 6447 &&
+    --taxonomy-root 2759 &&
 
 # genomehubs init \
 #     --config-file tests/integration_tests/config/boat.yaml \
@@ -24,15 +24,15 @@ genomehubs index \
     --config-file tests/integration_tests/config/molluscdb.yaml \
     --taxonomy-source ncbi \
     --assembly-dir scripts/dev/assembly-data &&
-#    --assembly-dir tests/integration_tests/sources/assembly-data &&
+#   --assembly-dir tests/integration_tests/sources/assembly-data &&
 genomehubs index \
     --config-file tests/integration_tests/config/molluscdb.yaml \
     --taxonomy-source ncbi \
     --assembly-dir tests/integration_tests/sources/assembly-data &&
-genomehubs index \
-    --config-file tests/integration_tests/config/molluscdb.yaml \
-    --taxonomy-source ncbi \
-    --feature-dir tests/integration_tests/sources/assembly-features &&
+# genomehubs index \
+#     --config-file tests/integration_tests/config/molluscdb.yaml \
+#     --taxonomy-source ncbi \
+#     --feature-dir tests/integration_tests/sources/assembly-features &&
 genomehubs fill \
     --config-file tests/integration_tests/config/molluscdb.yaml \
     --taxonomy-source ncbi \
