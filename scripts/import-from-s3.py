@@ -20,7 +20,7 @@ def parse_args() -> argparse.Namespace:
 
     parser: argparse.ArgumentParser = argparse.ArgumentParser()
     bucket: str = "molluscdb"
-    prefix: str = "latest"
+    prefix: str = "2024-05"
     url: str = "https://cog.sanger.ac.uk"
     config: str = "tests/integration_tests/sources/assembly-features"
     attribute: str = "files"
@@ -376,12 +376,12 @@ def main():
     # file_paths = meta.get("file_paths", {})
 
     assembly_dirs = gh_utils.get_directories_by_prefix(s3, args.bucket, args.prefix)
-    assembly_dirs = [
-        "2024-05/GCA_001194135.2/",
-        "2024-05/GCA_024364805.1/",
-        "2024-05/GCA_963556195.1/",
-        "2024-05/GCA_964016885.1/",
-    ]
+    # assembly_dirs = [
+    #     "2024-05/GCA_001194135.2/",
+    #     "2024-05/GCA_024364805.1/",
+    #     "2024-05/GCA_963556195.1/",
+    #     "2024-05/GCA_964016885.1/",
+    # ]
     # rows = []
 
     for assembly_dir in assembly_dirs:

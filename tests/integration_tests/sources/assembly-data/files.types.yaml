@@ -271,6 +271,7 @@ attributes:
     taxon_display_group: busco
     taxon_summary:
       - max
+      - min
     taxon_traverse: max
     taxon_traverse_direction: up
     taxon_display_level: 2
@@ -327,6 +328,7 @@ attributes:
     taxon_display_group: busco
     taxon_summary:
       - max
+      - min
     taxon_traverse: max
     taxon_traverse_direction: up
     taxon_display_level: 2
@@ -419,6 +421,7 @@ attributes:
     taxon_display_group: busco
     taxon_summary:
       - max
+      - min
     taxon_traverse: max
     taxon_traverse_direction: up
     taxon_display_level: 2
@@ -475,6 +478,7 @@ attributes:
     taxon_display_group: busco
     taxon_summary:
       - max
+      - min
     taxon_traverse: max
     taxon_traverse_direction: up
     taxon_display_level: 2
