@@ -19,10 +19,10 @@ genomehubs index \
     --config-file tests/integration_tests/config/molluscdb.yaml \
     --taxonomy-source ncbi \
     --assembly-dir tests/integration_tests/sources/assembly-data &&
-# genomehubs index \
-#     --config-file tests/integration_tests/config/molluscdb.yaml \
-#     --taxonomy-source ncbi \
-#     --feature-dir tests/integration_tests/sources/assembly-features &&
+genomehubs index \
+    --config-file tests/integration_tests/config/molluscdb.yaml \
+    --taxonomy-source ncbi \
+    --feature-dir tests/integration_tests/sources/assembly-features &&
 genomehubs fill \
     --config-file tests/integration_tests/config/molluscdb.yaml \
     --taxonomy-source ncbi \

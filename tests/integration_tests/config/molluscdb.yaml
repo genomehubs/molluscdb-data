@@ -1,6 +1,6 @@
 common:
   es:
-    batch: 10
+    batch: 500
     host:
       - "localhost:9202"
     timeout: 30

@@ -11,6 +11,26 @@ identifiers:
       len: 32
     header: assembly_id
     type: keyword
+  boat_id:
+    header: boat
+    source_url_template: https://boat.genomehubs.org/record?recordId={}&taxonomy=ncbi&result=assembly
+    type: keyword
+  btk_id:
+    header: btk
+    source_url_template: https://blobtoolkit.genomehubs.org/view/dataset/{}
+    type: keyword
+  ensembl_metazoa_id:
+    header: EnsemblMetazoa
+    source_url_template: https://metazoa.ensembl.org/{}/Info/Index
+    type: keyword
+  ensembl_rapid_id:
+    header: EnsemblRapid
+    source_url_template: https://rapid.ensembl.org/{}/Info/Index
+    type: keyword
+  ucsc_id:
+    header: UCSC
+    source_url_template: https://genome.ucsc.edu/h/{}
+    type: keyword
 attributes:
   files:
     display_level: 1

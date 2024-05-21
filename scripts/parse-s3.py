@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+import contextlib
+import csv
+import os
 from collections import defaultdict
 from typing import Any, Optional
 
@@ -22,6 +25,7 @@ def parse_args() -> argparse.Namespace:
     url: str = "https://cog.sanger.ac.uk"
     config: str = "tests/integration_tests/sources/assembly-data/files.types.yaml"
     attribute: str = "files"
+    xrefs: str = "scripts/dev/xrefs"
 
     parser.add_argument("--bucket", default=bucket)
     parser.add_argument("--prefix", default=prefix)
@@ -36,6 +40,12 @@ def parse_args() -> argparse.Namespace:
         "--config",
         default=config,
         help="path to config file",
+    )
+    parser.add_argument(
+        "-x",
+        "--xrefs",
+        default=xrefs,
+        help="path to xrefs directory",
     )
     parser.add_argument("--attribute", default=attribute)
     return parser.parse_args()
@@ -292,6 +302,88 @@ def get_entries(
     return entries
 
 
+def parse_tsv(xrefs: dict, xref_file: str, xref_name: str) -> dict:
+    """Parse xref TSV file.
+
+    Args:
+        xrefs: Dict of xrefs
+        xref_file: Path to xref TSV file
+        xref_name: Name of xref
+
+    Returns:
+        Dict mapping xref values to keys
+    """
+
+    indices = {
+        "boat": {
+            "taxon_id": 0,
+            "assembly_id": 3,
+            "xref_taxon_id": 0,
+            "xref_assembly_id": 3,
+        },
+        "btk": {
+            "taxon_id": 0,
+            "assembly_id": 2,
+            "xref_taxon_id": 0,
+            "xref_assembly_id": 3,
+        },
+        "EnsemblMetazoa": {
+            "taxon_id": 3,
+            "assembly_id": 5,
+            "xref_taxon_id": 1,
+            "xref_assembly_id": 1,
+        },
+        "EnsemblRapid": {
+            "taxon_id": 3,
+            "assembly_id": 5,
+            "xref_taxon_id": 1,
+            "xref_assembly_id": 1,
+        },
+        "UCSC": {
+            "taxon_id": 4,
+            "assembly_id": 0,
+            "xref_taxon_id": 0,
+            "xref_assembly_id": 0,
+        },
+    }
+    col_indices = indices.get(xref_name, {})
+    if not col_indices:
+        return {}
+
+    with open(xref_file, "r") as f:
+        delimiter = "\t" if xref_file.endswith(".tsv") else ","
+        rows = csv.reader(f, delimiter=delimiter)
+        for row in rows:
+            with contextlib.suppress(IndexError):
+                xref = {
+                    "taxon_id": row[col_indices["taxon_id"]],
+                    "assembly_id": row[col_indices["assembly_id"]],
+                    "xref_taxon_id": row[col_indices["xref_taxon_id"]],
+                    "xref_assembly_id": row[col_indices["xref_assembly_id"]],
+                }
+                xrefs[xref["assembly_id"]][xref_name] = xref["xref_assembly_id"]
+
+
+def load_xrefs(xref_dir: str) -> dict:
+    """Load xrefs from the specified directory.
+
+    Args:
+        xrefs: Path to xrefs directory
+
+    Returns:
+        Dict mapping xref names to values
+    """
+
+    xref_files = [
+        f for f in os.listdir(xref_dir) if os.path.isfile(os.path.join(xref_dir, f))
+    ]
+    xrefs = defaultdict(dict)
+    for xref_file in xref_files:
+        xref_name = xref_file.split("_")[0]
+        parse_tsv(xrefs, os.path.join(xref_dir, xref_file), xref_name)
+    return xrefs
+
+
 def main():
     """
     Main entry point for the script. Parses command line arguments, loads
@@ -314,6 +406,7 @@ def main():
     file_paths = meta.get("file_paths", {})
 
     assembly_dirs = gh_utils.get_directories_by_prefix(s3, args.bucket, args.prefix)
+    xrefs = load_xrefs(args.xrefs)
     rows = []
 
     for assembly_dir in assembly_dirs:
@@ -322,6 +415,9 @@ def main():
         entries = get_entries(
             s3, args.bucket, assembly_dir, subdirs, file_paths, args.attribute
         )
+        if entries["assembly_id"][0] in xrefs:
+            entries.update(xrefs[entries["assembly_id"][0]])
+            print(xrefs[entries["assembly_id"][0]])
         rows.append(entries)
     headers = gh_utils.set_headers(config)
     gh_utils.print_to_tsv(headers, rows, meta)
